@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Exports & Controls | Referral Draft Assistant{% endblock %}
+
+{% block content %}
+<section class="card-grid two-up">
+  <article class="card">
+    <h2>Controls</h2>
+    <p>Kill switch is currently <strong>{{ "enabled" if kill_switch.enabled else "disabled" }}</strong>.</p>
+    <div class="button-row">
+      <form method="post" action="{{ url_for('toggle_kill_switch') }}">
+        <input type="hidden" name="enabled" value="true">
+        <button class="button danger" type="submit">Enable Kill Switch</button>
+      </form>
+      <form method="post" action="{{ url_for('toggle_kill_switch') }}">
+        <input type="hidden" name="enabled" value="false">
+        <button class="button secondary" type="submit">Disable Kill Switch</button>
+      </form>
+    </div>
+
+    <form method="post" action="{{ url_for('run_scheduler') }}">
+      <button class="button" type="submit">Run Scheduler Once</button>
+    </form>
+
+    <a class="button secondary" href="{{ url_for('export_leads') }}">Download Lead Tracker CSV</a>
+  </article>
+
+  <article class="card">
+    <h2>Deferred / Blocked Records</h2>
+    {% if deferred %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Community</th>
+              <th>Status</th>
+              <th>Reason Codes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in deferred %}
+              <tr>
+                <td>{{ record.id }}</td>
+                <td>{{ record.opportunity.community_name }}</td>
+                <td>{{ record.status.value }}</td>
+                <td>{{ (record.decision.reason_codes or record.compliance.reason_codes)|join(", ") }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="empty-state">No deferred or blocked records yet.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

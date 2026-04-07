@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "referral-draft-assistant"
+version = "0.1.0"
+description = "Local-only compliant referral draft assistant with Reddit ingestion, Gemini drafting, SQLite tracking, and a local Flask dashboard."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "flask>=3.0.3",
+  "google-generativeai>=0.8.3",
+  "praw>=7.8.1",
+  "requests>=2.32.3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.4",
+]
+
+[project.scripts]
+referral-assistant-init-db = "referral_assistant.cli:init_db_command"
+referral-assistant-run-once = "referral_assistant.cli:run_once_command"
+referral-assistant-dashboard = "referral_assistant.ui.dashboard:main"
+referral-assistant-launcher = "referral_assistant.launcher:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+referral_assistant = ["ui/templates/*.html", "ui/static/*.css"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

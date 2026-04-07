@@ -1,0 +1,254 @@
+:root {
+  --bg: #f4f1ea;
+  --panel: #fffdf8;
+  --panel-alt: #efe7d7;
+  --text: #231c14;
+  --muted: #6d6255;
+  --border: #d4c7b4;
+  --accent: #1d6b57;
+  --accent-soft: #dcefe9;
+  --danger: #9d3b2e;
+  --danger-soft: #f3dfdb;
+  --warning: #8d6a11;
+  --warning-soft: #f5eccd;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: linear-gradient(180deg, #f8f3ea 0%, var(--bg) 100%);
+  color: var(--text);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header h1 {
+  margin: 0 0 0.3rem;
+}
+
+.site-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.page-shell {
+  padding: 1.5rem 2rem 2rem;
+}
+
+.card-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.metrics-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.two-up {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.card,
+.subcard {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 10px 30px rgba(35, 28, 20, 0.05);
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 1.9rem;
+  margin-top: 0.35rem;
+}
+
+.metric-label,
+.hint,
+.empty-state {
+  color: var(--muted);
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.subcard-header,
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.button,
+button {
+  display: inline-block;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font: inherit;
+}
+
+.button.secondary {
+  background: var(--panel-alt);
+  color: var(--text);
+}
+
+.button.danger {
+  background: var(--danger);
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fffcf7;
+  font: inherit;
+  color: var(--text);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.log-box {
+  overflow-x: auto;
+  white-space: pre-wrap;
+  background: #fcf8f1;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  color: var(--text);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.7rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.persona-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.persona-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 40px;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.persona-bar-shell {
+  height: 14px;
+  background: var(--panel-alt);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.persona-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #2d836b, #63b699);
+}
+
+.list-link {
+  display: block;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  background: #faf4ea;
+  border: 1px solid var(--border);
+}
+
+.list-link.active {
+  background: var(--accent-soft);
+  border-color: #89b9aa;
+}
+
+.flash-stack {
+  padding: 1rem 2rem 0;
+}
+
+.flash {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+}
+
+.flash-info,
+.flash-success {
+  background: var(--accent-soft);
+  color: #154b3e;
+}
+
+.flash-warning {
+  background: var(--warning-soft);
+  color: #5f4707;
+}
+
+.flash-error {
+  background: var(--danger-soft);
+  color: #6f2319;
+}
+
+@media (max-width: 700px) {
+  .page-shell,
+  .site-header,
+  .flash-stack {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .persona-row {
+    grid-template-columns: 1fr;
+  }
+}

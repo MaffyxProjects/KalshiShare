@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Logs | Referral Draft Assistant{% endblock %}
+
+{% block content %}
+<section class="card">
+  <h2>Runtime Logs</h2>
+  <pre class="log-box">{{ log_lines|join("\n") }}</pre>
+</section>
+
+<section class="card-grid two-up">
+  <article class="card">
+    <h2>Recent Events</h2>
+    {% if events %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Type</th>
+              <th>Level</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for event in events %}
+              <tr>
+                <td>{{ event.created_at }}</td>
+                <td>{{ event.event_type }}</td>
+                <td>{{ event.level }}</td>
+                <td>{{ event.message }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="empty-state">No events logged yet.</p>
+    {% endif %}
+  </article>
+
+  <article class="card">
+    <h2>Recent Errors</h2>
+    {% if errors %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Type</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for error in errors %}
+              <tr>
+                <td>{{ error.created_at }}</td>
+                <td>{{ error.error_type }}</td>
+                <td>{{ error.message }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="empty-state">No errors logged yet.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Referral Draft Assistant{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <h1>Referral Draft Assistant</h1>
+        <p>Local-only manual-review workflow for compliant referral discovery and drafting.</p>
+      </div>
+      <nav class="nav-links">
+        <a href="{{ url_for('overview') }}">Overview</a>
+        <a href="{{ url_for('inbox') }}">Inbox</a>
+        <a href="{{ url_for('review') }}">Draft Review</a>
+        <a href="{{ url_for('logs') }}">Logs</a>
+        <a href="{{ url_for('controls') }}">Exports & Controls</a>
+      </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <section class="flash-stack">
+          {% for category, message in messages %}
+            <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </section>
+      {% endif %}
+    {% endwith %}
+
+    <main class="page-shell">
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Draft Review | Referral Draft Assistant{% endblock %}
+
+{% block content %}
+<section class="card-grid two-up review-layout">
+  <article class="card">
+    <h2>Reviewable Leads</h2>
+    {% if records %}
+      <div class="stack">
+        {% for record in records %}
+          <a class="list-link {% if selected_record and selected_record.id == record.id %}active{% endif %}" href="{{ url_for('review', lead_id=record.id) }}">
+            #{{ record.id }} | r/{{ record.opportunity.community_name }} | {{ record.status.value }}
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No reviewable drafts are available yet.</p>
+    {% endif %}
+  </article>
+
+  <article class="card">
+    <h2>Selected Lead</h2>
+    {% if selected_record and packet %}
+      <p><strong>Source Thread:</strong> <a href="{{ packet.open_url }}" target="_blank" rel="noreferrer">{{ packet.open_url }}</a></p>
+      <p><strong>Persona:</strong> {{ packet.persona }}</p>
+      <p><strong>Compliance:</strong> {{ selected_record.compliance.summary }}</p>
+      <label>Final Draft Text</label>
+      <textarea rows="12" readonly>{{ packet.rendered_reply }}</textarea>
+
+      <form method="post" action="{{ url_for('mark_posted', lead_id=selected_record.id) }}" class="stack">
+        <label for="public_post_url">Public Post URL</label>
+        <input id="public_post_url" type="url" name="public_post_url" value="{{ selected_record.public_post_url }}">
+        <label for="operator_notes">Operator Notes</label>
+        <textarea id="operator_notes" name="operator_notes" rows="5">{{ selected_record.operator_notes }}</textarea>
+        <button class="button" type="submit">Mark As Manually Posted</button>
+      </form>
+
+      <form method="post" action="{{ url_for('verify_visibility', lead_id=selected_record.id) }}" class="stack">
+        <input type="hidden" name="public_post_url" value="{{ selected_record.public_post_url }}">
+        <input type="hidden" name="operator_notes" value="{{ selected_record.operator_notes }}">
+        <button class="button secondary" type="submit">Run Visibility Check</button>
+      </form>
+    {% else %}
+      <p class="empty-state">Select a lead to review.</p>
+    {% endif %}
+  </article>
+</section>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Overview | Referral Draft Assistant{% endblock %}
+
+{% block content %}
+<section class="card-grid metrics-grid">
+  <article class="card metric-card">
+    <span class="metric-label">Queued Today</span>
+    <strong>{{ metrics.queued_today }}</strong>
+  </article>
+  <article class="card metric-card">
+    <span class="metric-label">Posted Today</span>
+    <strong>{{ metrics.posted_today }}</strong>
+  </article>
+  <article class="card metric-card">
+    <span class="metric-label">Errors Today</span>
+    <strong>{{ metrics.errors_today }}</strong>
+  </article>
+  <article class="card metric-card">
+    <span class="metric-label">Total Leads</span>
+    <strong>{{ metrics.total_leads }}</strong>
+  </article>
+  <article class="card metric-card">
+    <span class="metric-label">Candidates Today</span>
+    <strong>{{ metrics.candidates_processed_today }}</strong>
+  </article>
+  <article class="card metric-card">
+    <span class="metric-label">Drafts Today</span>
+    <strong>{{ metrics.drafts_created_today }}</strong>
+  </article>
+</section>
+
+<section class="card-grid two-up">
+  <article class="card">
+    <h2>System State</h2>
+    <p>Kill Switch: <strong>{{ "Enabled" if metrics.kill_switch_enabled else "Disabled" }}</strong></p>
+  </article>
+  <article class="card">
+    <h2>Persona Distribution</h2>
+    {% if persona_distribution %}
+      <div class="persona-list">
+        {% for item in persona_distribution %}
+          <div class="persona-row">
+            <span class="persona-name">{{ item.persona }}</span>
+            <div class="persona-bar-shell">
+              <div class="persona-bar" style="width: {{ item.width_pct }}%"></div>
+            </div>
+            <span class="persona-count">{{ item.count }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">No persona decisions recorded yet.</p>
+    {% endif %}
+  </article>
+</section>
+
+<section class="card">
+  <h2>Recent Events</h2>
+  {% if events %}
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>When</th>
+            <th>Type</th>
+            <th>Level</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for event in events %}
+            <tr>
+              <td>{{ event.created_at }}</td>
+              <td>{{ event.event_type }}</td>
+              <td>{{ event.level }}</td>
+              <td>{{ event.message }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="empty-state">No events logged yet.</p>
+  {% endif %}
+</section>
+{% endblock %}
